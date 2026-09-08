@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 1210" width="1160" height="1210" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <style>
+    .titre      { font-size: 21px; font-weight: 700; fill: #0f172a; }
+    .soustitre  { font-size: 11.5px; fill: #64748b; }
+    .acteur-nom { font-size: 12.5px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+    .acteur-rol { font-size: 9.5px; fill: #64748b; text-anchor: middle; }
+    .uc         { font-size: 11.5px; fill: #0f172a; text-anchor: middle; }
+    .paquet     { font-size: 10px; font-weight: 700; fill: #0284c7; letter-spacing: .5px; text-anchor: middle; }
+    .lien       { stroke: #94a3b8; stroke-width: 1.1; fill: none; }
+    .lien-s     { stroke: #8b5cf6; stroke-width: 1.2; fill: none; }
+    .lien-c     { stroke: #0284c7; stroke-width: 1.2; fill: none; }
+    .lien-g     { stroke: #f59e0b; stroke-width: 1.3; fill: none; }
+    .lien-a     { stroke: #e11d48; stroke-width: 1.3; fill: none; }
+    .gener      { stroke: #0f172a; stroke-width: 1.5; fill: none; }
+    .strie      { stroke: #0f172a; stroke-width: 1.7; fill: none; stroke-linecap: round; }
+    .ellipse    { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.2; }
+    .ellipse-f  { fill: #ecfdf5; stroke: #10b981; stroke-width: 1.3; }
+    .ellipse-s  { fill: #fef2f2; stroke: #f43f5e; stroke-width: 1.3; }
+    .inc        { font-size: 9px; fill: #0284c7; font-style: italic; text-anchor: middle; }
+    .note       { font-size: 10px; fill: #64748b; }
+    .note-t     { font-size: 10px; fill: #0f172a; }
+  </style>
+
+  <rect width="1160" height="1210" fill="#ffffff"/>
+
+  <text x="40" y="40" class="titre">Diagramme de cas d'utilisation — FiducialPro</text>
+  <text x="40" y="60" class="soustitre">Système intégré de gestion de cabinet fiduciaire · Les droits représentés correspondent exactement aux Policies appliquées dans l'application</text>
+
+  <!-- ============ Frontière du système ============ -->
+  <rect x="430" y="86" width="380" height="1092" rx="10" fill="#ffffff" stroke="#0f172a" stroke-width="1.6"/>
+  <text x="620" y="110" font-size="13.5" font-weight="700" fill="#0f172a" text-anchor="middle">FiducialPro</text>
+
+  <!-- ============ ACTEUR : Secrétaire (gauche) ============ -->
+  <g transform="translate(200, 285)">
+    <circle cx="0" cy="-26" r="10" class="strie"/>
+    <line x1="0" y1="-16" x2="0" y2="10" class="strie"/>
+    <line x1="-14" y1="-6" x2="14" y2="-6" class="strie"/>
+    <line x1="0" y1="10" x2="-12" y2="30" class="strie"/>
+    <line x1="0" y1="10" x2="12" y2="30" class="strie"/>
+    <text x="0" y="48" class="acteur-nom">Secrétaire</text>
+    <text x="0" y="62" class="acteur-rol">Accueil clients</text>
+  </g>
+
+  <!-- ============ ACTEUR : Comptable (droite) ============ -->
+  <g transform="translate(960, 470)">
+    <circle cx="0" cy="-26" r="10" class="strie"/>
+    <line x1="0" y1="-16" x2="0" y2="10" class="strie"/>
+    <line x1="-14" y1="-6" x2="14" y2="-6" class="strie"/>
+    <line x1="0" y1="10" x2="-12" y2="30" class="strie"/>
+    <line x1="0" y1="10" x2="12" y2="30" class="strie"/>
+    <text x="0" y="48" class="acteur-nom">Chef de mission</text>
+    <text x="0" y="62" class="acteur-rol">Comptable</text>
+  </g>
+
+  <!-- ============ ACTEUR : Gérant (droite) ============ -->
+  <g transform="translate(960, 800)">
+    <circle cx="0" cy="-26" r="10" class="strie"/>
+    <line x1="0" y1="-16" x2="0" y2="10" class="strie"/>
+    <line x1="-14" y1="-6" x2="14" y2="-6" class="strie"/>
+    <line x1="0" y1="10" x2="-12" y2="30" class="strie"/>
+    <line x1="0" y1="10" x2="12" y2="30" class="strie"/>
+    <text x="0" y="48" class="acteur-nom">Gérant / Associé</text>
+    <text x="0" y="62" class="acteur-rol">Direction du cabinet</text>
+  </g>
+
+  <!-- ============ ACTEUR : Administrateur (droite) ============ -->
+  <g transform="translate(960, 1075)">
+    <circle cx="0" cy="-26" r="10" class="strie"/>
+    <line x1="0" y1="-16" x2="0" y2="10" class="strie"/>
+    <line x1="-14" y1="-6" x2="14" y2="-6" class="strie"/>
+    <line x1="0" y1="10" x2="-12" y2="30" class="strie"/>
+    <line x1="0" y1="10" x2="12" y2="30" class="strie"/>
+    <text x="0" y="48" class="acteur-nom">Administrateur</text>
+    <text x="0" y="62" class="acteur-rol">Accès total</text>
+  </g>
+
+  <!-- ============ ACTEUR SYSTÈME : DGI ============ -->
+  <g transform="translate(200, 690)">
+    <rect x="-58" y="-20" width="116" height="44" rx="5" fill="#f8fafc" stroke="#0f172a" stroke-width="1.4"/>
+    <text x="0" y="-4" font-size="10.5" font-style="italic" fill="#64748b" text-anchor="middle">«système externe»</text>
+    <text x="0" y="14" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">DGI — SIMPL</text>
+  </g>
+
+  <!-- ============ GÉNÉRALISATIONS ENTRE ACTEURS ============ -->
+  <!-- Généralisation : Gérant vers Comptable -->
+  <line x1="960" y1="760" x2="960" y2="562" class="gener"/>
+  <polygon points="960,544 952,562 968,562" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <!-- Généralisation : Administrateur vers Gérant -->
+  <line x1="960" y1="1035" x2="960" y2="894" class="gener"/>
+  <polygon points="960,876 952,894 968,894" fill="#ffffff" stroke="#0f172a" stroke-width="1.5"/>
+  <text x="976" y="668" class="note" font-style="italic">hérite des droits</text>
+  <text x="976" y="972" class="note" font-style="italic">hérite des droits</text>
+
+  <!-- ============ CAS D'UTILISATION ============ -->
+  <text x="620" y="140" class="paquet">ACCÈS &amp; PORTEFEUILLE CLIENTS</text>
+
+  <ellipse cx="620" cy="172" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="176" class="uc">S'authentifier</text>
+
+  <ellipse cx="620" cy="226" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="230" class="uc">Consulter le portefeuille clients</text>
+
+  <ellipse cx="620" cy="280" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="284" class="uc">Créer une fiche client</text>
+
+  <ellipse cx="620" cy="334" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="338" class="uc">Déposer une pièce dans la GED</text>
+
+  <ellipse cx="620" cy="388" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="392" class="uc">Planifier une échéance</text>
+
+  <text x="620" y="432" class="paquet">MISSIONS &amp; OBLIGATIONS FISCALES</text>
+
+  <ellipse cx="620" cy="464" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="468" class="uc">Modifier une fiche client</text>
+
+  <ellipse cx="620" cy="518" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="522" class="uc">Gérer les dossiers de mission</text>
+
+  <ellipse cx="620" cy="572" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="576" class="uc">Affecter des collaborateurs</text>
+
+  <ellipse cx="620" cy="626" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="630" class="uc">Saisir une déclaration fiscale</text>
+
+  <ellipse cx="620" cy="680" rx="150" ry="21" class="ellipse-s"/>
+  <text x="620" y="684" class="uc">Télé-déposer la déclaration</text>
+  <text x="620" y="708" class="inc">«include» contrôle RG10 · date non postdatée</text>
+
+  <text x="620" y="742" class="paquet">FACTURATION &amp; ENCAISSEMENTS</text>
+
+  <ellipse cx="620" cy="774" rx="150" ry="21" class="ellipse-f"/>
+  <text x="620" y="778" class="uc">Émettre une facture d'honoraires</text>
+
+  <ellipse cx="620" cy="828" rx="150" ry="21" class="ellipse-f"/>
+  <text x="620" y="832" class="uc">Enregistrer un règlement</text>
+  <text x="620" y="856" class="inc">«include» contrôle RG08 · anti sur-paiement</text>
+
+  <ellipse cx="620" cy="890" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="894" class="uc">Éditer facture PDF / reçu acquitté</text>
+
+  <text x="620" y="934" class="paquet">PILOTAGE &amp; ADMINISTRATION</text>
+
+  <ellipse cx="620" cy="966" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="970" class="uc">Consulter le tableau de bord</text>
+
+  <ellipse cx="620" cy="1020" rx="150" ry="21" class="ellipse"/>
+  <text x="620" y="1024" class="uc">Exporter un rapport PDF / Excel</text>
+
+  <ellipse cx="620" cy="1074" rx="150" ry="21" class="ellipse-s"/>
+  <text x="620" y="1078" class="uc">Archiver ou supprimer un client</text>
+
+  <ellipse cx="620" cy="1128" rx="150" ry="21" class="ellipse-s"/>
+  <text x="620" y="1126" class="uc">Administrer utilisateurs, audit</text>
+  <text x="620" y="1139" class="uc">et corbeille</text>
+
+  <!-- ============ ASSOCIATIONS : SECRÉTAIRE (gauche) ============ -->
+  <path d="M 235 272 C 330 210, 400 178, 470 172" class="lien-s"/>
+  <path d="M 235 278 C 330 250, 400 228, 470 226" class="lien-s"/>
+  <path d="M 235 285 L 470 280" class="lien-s"/>
+  <path d="M 235 292 C 330 320, 400 332, 470 334" class="lien-s"/>
+  <path d="M 235 298 C 330 355, 400 384, 470 388" class="lien-s"/>
+
+  <!-- ============ ASSOCIATIONS : COMPTABLE (droite) ============ -->
+  <path d="M 925 452 C 860 300, 830 190, 770 172" class="lien-c"/>
+  <path d="M 925 456 C 855 340, 830 235, 770 226" class="lien-c"/>
+  <path d="M 925 462 C 860 420, 830 462, 770 464" class="lien-c"/>
+  <path d="M 925 466 C 860 480, 830 514, 770 518" class="lien-c"/>
+  <path d="M 925 470 C 860 510, 830 566, 770 572" class="lien-c"/>
+  <path d="M 925 474 C 860 540, 830 620, 770 626" class="lien-c"/>
+  <path d="M 925 478 C 860 570, 830 672, 770 680" class="lien-c"/>
+  <path d="M 925 482 C 860 610, 830 766, 770 774" class="lien-c"/>
+  <path d="M 925 486 C 860 640, 830 820, 770 828" class="lien-c"/>
+  <path d="M 925 490 C 860 670, 830 882, 770 890" class="lien-c"/>
+  <path d="M 925 494 C 855 700, 830 958, 770 966" class="lien-c"/>
+  <path d="M 925 498 C 850 730, 830 1012, 770 1020" class="lien-c"/>
+
+  <!-- ============ ASSOCIATIONS : GÉRANT (droite) — droits propres ============ -->
+  <path d="M 925 788 C 880 600, 850 300, 770 280" class="lien-g"/>
+  <path d="M 925 812 C 870 950, 830 1066, 770 1074" class="lien-g"/>
+
+  <!-- ============ ASSOCIATIONS : ADMINISTRATEUR (droite) — droits propres ============ -->
+  <path d="M 925 1070 C 880 1110, 830 1128, 770 1128" class="lien-a"/>
+
+  <!-- ============ LIAISON DGI ============ -->
+  <path d="M 258 686 C 340 684, 400 682, 470 680" class="lien" stroke-dasharray="5 4"/>
+  <text x="360" y="672" class="note" fill="#f43f5e">récépissé</text>
+
+  <!-- ============ LÉGENDE ============ -->
+  <g transform="translate(48, 840)">
+    <rect x="0" y="0" width="300" height="196" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="16" y="24" font-size="11.5" font-weight="700" fill="#0f172a">Légende</text>
+
+    <line x1="16" y1="44" x2="44" y2="44" class="lien-s"/>
+    <text x="54" y="48" class="note-t">Secrétaire</text>
+
+    <line x1="16" y1="66" x2="44" y2="66" class="lien-c"/>
+    <text x="54" y="70" class="note-t">Comptable</text>
+
+    <line x1="16" y1="88" x2="44" y2="88" class="lien-g"/>
+    <text x="54" y="92" class="note-t">Gérant — droits propres (hérite du comptable)</text>
+
+    <line x1="16" y1="110" x2="44" y2="110" class="lien-a"/>
+    <text x="54" y="114" class="note-t">Administrateur — droits propres</text>
+
+    <ellipse cx="30" cy="136" rx="14" ry="8" class="ellipse-f"/>
+    <text x="54" y="140" class="note">Opération financière protégée</text>
+
+    <ellipse cx="30" cy="160" rx="14" ry="8" class="ellipse-s"/>
+    <text x="54" y="164" class="note">Accès restreint par Policy</text>
+
+    <line x1="16" y1="182" x2="44" y2="182" class="lien" stroke-dasharray="4 3"/>
+    <text x="54" y="186" class="note">Échange avec un système externe</text>
+  </g>
+
+  <!-- ============ NOTE : hiérarchie ============ -->
+  <g transform="translate(48, 130)">
+    <rect x="0" y="0" width="300" height="106" rx="8" fill="#fef9c3" stroke="#eab308"/>
+    <text x="16" y="24" font-size="11.5" font-weight="700" fill="#0f172a">Hiérarchie des droits</text>
+    <text x="16" y="46" class="note-t">Le Gérant hérite de tous les droits du</text>
+    <text x="16" y="62" class="note-t">Comptable, et l'Administrateur de ceux du</text>
+    <text x="16" y="78" class="note-t">Gérant. Seuls leurs droits supplémentaires</text>
+    <text x="16" y="94" class="note-t">sont représentés par une association directe.</text>
+  </g>
+</svg>

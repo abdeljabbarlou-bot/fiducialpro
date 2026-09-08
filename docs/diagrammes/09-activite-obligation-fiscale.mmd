@@ -1,0 +1,36 @@
+flowchart TD
+    A([Début — ouverture de l'exercice]) --> B[Planification des obligations<br/>du portefeuille clients]
+    B --> C[Création de la déclaration<br/>statut : À préparer]
+    C --> D[/Collecte des pièces<br/>justificatives dans la GED/]
+    D --> E{Pièces complètes ?}
+    E -- Non --> E1[Relance du client]
+    E1 --> D
+    E -- Oui --> F[Préparation de la liasse<br/>statut : En préparation]
+    F --> G[Contrôle par le chef de mission]
+    G --> H{Liasse conforme ?}
+    H -- Non --> F
+    H -- Oui --> I[Statut : Prête]
+
+    I --> J{Échéance légale dépassée ?}
+    J -- Oui --> J1[Bascule automatique — RG11<br/>statut : En retard<br/>+ notification d'alerte]
+    J1 --> K
+    J -- Non --> K[/Télétransmission sur le<br/>portail DGI — SIMPL/]
+
+    K --> L[Réception du récépissé électronique]
+    L --> M{Date de dépôt<br/>≤ aujourd'hui ?}
+    M -- Non --> M1[Refus : dépôt postdaté]
+    M1 --> K
+    M -- Oui --> N[Enregistrement du dépôt<br/>statut : Déposée<br/>+ journal d'audit]
+    N --> O[/Règlement de l'impôt<br/>par le client/]
+    O --> P[Statut : Payée]
+    P --> Q[Archivage du récépissé dans la GED]
+    Q --> R([Fin — obligation satisfaite])
+
+    style A fill:#0f172a,color:#fff
+    style R fill:#10b981,color:#fff
+    style E fill:#fef3c7
+    style H fill:#fef3c7
+    style J fill:#fef3c7
+    style M fill:#fef3c7
+    style J1 fill:#fee2e2
+    style M1 fill:#fee2e2

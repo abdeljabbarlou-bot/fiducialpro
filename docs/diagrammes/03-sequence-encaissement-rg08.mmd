@@ -1,0 +1,45 @@
+sequenceDiagram
+    autonumber
+    actor C as Comptable
+    participant Ctrl as PaymentController
+    participant Svc as PaymentService
+    participant DB as Base de données
+    participant Inv as Modèle Invoice
+    participant Log as ActivityLog
+    participant Notif as Notifications
+
+    C->>Ctrl: POST /payments (facture, montant, date, mode)
+    Ctrl->>Ctrl: validate() — date ≤ aujourd'hui
+
+    alt Date d'encaissement postdatée
+        Ctrl-->>C: Refus — « La date ne peut pas être postérieure à aujourd'hui »
+    else Date antérieure à l'émission de la facture
+        Ctrl->>DB: SELECT invoice
+        Ctrl-->>C: Refus — « Antérieure à la date d'émission »
+    else Dates cohérentes
+        Ctrl->>Svc: recordPayment(facture, données, userId)
+
+        Svc->>Svc: Contrôle montant > 0
+        Svc->>DB: BEGIN TRANSACTION
+        Svc->>DB: SELECT ... FOR UPDATE (verrou pessimiste)
+        Note over Svc,DB: Empêche deux encaissements concurrents<br/>sur la même facture
+        DB-->>Svc: Facture verrouillée
+        Svc->>DB: SUM(payments.amount) déjà encaissé
+        Svc->>Svc: maxAllowed = total_ttc − déjà encaissé
+
+        alt Montant > solde restant dû (RG08)
+            Svc->>DB: ROLLBACK
+            Svc-->>Ctrl: Exception « dépasse le solde restant à payer »
+            Ctrl-->>C: Encaissement refusé
+        else Montant ≤ solde restant dû
+            Svc->>DB: INSERT payment
+            Svc->>Inv: recalculatePaymentStatus()
+            Note over Inv: paid_amount · remaining_amount<br/>puis transition d'état (RG07)
+            Inv->>DB: UPDATE invoice (statut)
+            Svc->>Log: log(paiement, adresse IP, user-agent)
+            Svc->>Notif: Notification « Règlement enregistré »
+            Svc->>DB: COMMIT
+            Svc-->>Ctrl: Paiement enregistré
+            Ctrl-->>C: Confirmation + reçu acquitté imprimable
+        end
+    end

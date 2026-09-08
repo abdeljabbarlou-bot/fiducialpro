@@ -1,0 +1,41 @@
+sequenceDiagram
+    autonumber
+    actor U as Utilisateur
+    participant V as Page de connexion
+    participant Ctrl as AuthController
+    participant RL as RateLimiter
+    participant Auth as Service d'authentification
+    participant DB as Base de données
+    participant Log as ActivityLog
+
+    U->>V: Saisit son email et son mot de passe
+    V->>Ctrl: POST /login
+    Ctrl->>Ctrl: validate(email, password)
+    Ctrl->>RL: tooManyAttempts(email + IP, max 5) ?
+
+    alt Compte temporairement bloqué
+        RL-->>Ctrl: Oui — délai restant
+        Ctrl-->>U: « Trop de tentatives. Réessayez dans N minute(s) »
+    else Tentatives disponibles
+        RL-->>Ctrl: Non
+        Ctrl->>Auth: attempt(identifiants)
+        Auth->>DB: Vérifie le hash Bcrypt
+
+        alt Identifiants invalides
+            Auth-->>Ctrl: Échec
+            Ctrl->>RL: hit(clé, 300 s)
+            Ctrl->>Log: log(connexion_echouee, email, adresse IP)
+            Ctrl-->>U: « Identifiants invalides »
+        else Identifiants valides mais compte inactif
+            Auth-->>Ctrl: Succès
+            Ctrl->>Auth: logout()
+            Ctrl-->>U: « Votre compte est inactif ou suspendu »
+        else Authentification réussie
+            Auth-->>Ctrl: Succès
+            Ctrl->>RL: clear(clé)
+            Ctrl->>DB: UPDATE last_login_at · last_login_ip
+            Ctrl->>Log: log(connexion réussie + rôle)
+            Ctrl->>Ctrl: session()->regenerate() — anti fixation de session
+            Ctrl-->>U: Redirection vers le tableau de bord
+        end
+    end

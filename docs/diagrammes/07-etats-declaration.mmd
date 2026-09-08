@@ -1,0 +1,37 @@
+stateDiagram-v2
+    direction TB
+
+    [*] --> a_preparer : Création de l'obligation fiscale
+
+    state "À préparer" as a_preparer
+    state "En préparation" as en_preparation
+    state "Prête" as prete
+    state "Déposée" as deposee
+    state "Payée" as payee_d
+    state "En retard" as retard_d
+    state "Annulée" as annulee_d
+
+    a_preparer --> en_preparation : Prise en charge<br/>par un collaborateur
+    en_preparation --> prete : Liasse contrôlée et validée
+    prete --> deposee : Télétransmission SIMPL<br/>+ récépissé DGI
+    deposee --> payee_d : Règlement de l'impôt
+
+    a_preparer --> retard_d : Échéance légale dépassée
+    en_preparation --> retard_d : Échéance légale dépassée
+    prete --> retard_d : Échéance légale dépassée
+
+    retard_d --> deposee : Dépôt tardif régularisé
+
+    a_preparer --> annulee_d : Obligation sans objet
+    en_preparation --> annulee_d : Obligation sans objet
+
+    payee_d --> [*]
+    annulee_d --> [*]
+
+    note right of retard_d
+        RG11 — bascule automatique par
+        syncOverdueDeclarations() dès que
+        due_date < aujourd'hui et que le statut
+        n'est ni déposée, ni payée, ni annulée.
+        Génère une notification d'alerte.
+    end note

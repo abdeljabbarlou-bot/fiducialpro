@@ -1,0 +1,35 @@
+sequenceDiagram
+    autonumber
+    actor C as Comptable
+    participant Ctrl as DeclarationController
+    participant Pol as DeclarationPolicy
+    participant Svc as DeclarationService
+    participant DB as Base de données
+    participant Log as ActivityLog
+    participant DGI as Portail DGI<br/>SIMPL / DAMANCOM
+
+    Note over C,DGI: Le dépôt s'effectue sur le portail de la DGI,<br/>puis sa preuve est tracée dans FiducialPro
+
+    C->>DGI: Télétransmet la déclaration (TVA, IS, IR, CNSS)
+    DGI-->>C: Récépissé électronique (n° de dépôt)
+
+    C->>Ctrl: POST /declarations/{id}/mark-filed<br/>(date de dépôt, référence SIMPL)
+    Ctrl->>Pol: authorize('file', declaration)
+
+    alt Profil Secrétaire
+        Pol-->>Ctrl: Refusé
+        Ctrl-->>C: 403 — Accès refusé
+    else Profil Comptable, Gérant ou Administrateur
+        Pol-->>Ctrl: Autorisé
+        Ctrl->>Ctrl: validate() — date ≤ aujourd'hui (RG10)
+
+        alt Date de dépôt dans le futur
+            Ctrl-->>C: Refus — « La date de dépôt ne peut pas être postérieure à aujourd'hui »
+        else Date valide
+            Ctrl->>Svc: markAsFiled(déclaration, date, référence)
+            Svc->>DB: UPDATE statut → 'deposee'<br/>filing_date · filing_reference
+            Svc->>Log: log(modification, référence SIMPL enregistrée)
+            Svc-->>Ctrl: Déclaration déposée
+            Ctrl-->>C: « La déclaration a été marquée comme déposée »
+        end
+    end

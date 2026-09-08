@@ -1,0 +1,50 @@
+sequenceDiagram
+    autonumber
+    actor C as Comptable
+    participant V as Navigateur<br/>(invoices/create)
+    participant Ctrl as InvoiceController
+    participant Pol as Middleware de rôle
+    participant Svc as InvoiceService
+    participant DB as Base de données
+    participant Log as ActivityLog
+
+    C->>V: Saisit client, dates et lignes de prestations
+    V->>Ctrl: POST /invoices
+    Ctrl->>Pol: Vérifie le rôle (admin, gerant, comptable)
+    Pol-->>Ctrl: Autorisé
+    Ctrl->>Ctrl: validate() — taux de TVA ∈ {20,14,10,7,0}<br/>et due_date ≥ invoice_date
+
+    alt Taux de TVA illégal
+        Ctrl-->>V: Rejet — « Le champ taux de TVA est invalide »
+    else Données valides
+        Ctrl->>Svc: createInvoice(données, lignes, userId)
+
+        loop Jusqu'à 5 tentatives (RG06)
+            Svc->>DB: BEGIN TRANSACTION
+            Svc->>DB: generateReference() → FAC-AAAA-NNNN
+            Svc->>DB: INSERT invoice
+
+            alt Référence déjà prise (émission simultanée)
+                DB-->>Svc: UniqueConstraintViolationException
+                Svc->>DB: ROLLBACK
+                Note over Svc: Régénère la référence et retente
+            else Référence libre
+                Svc->>DB: INSERT invoice_items (n lignes)
+                Note over DB: Le hook saving() calcule<br/>total_ht et total_ttc par ligne
+                Svc->>Svc: recalculateTotals()<br/>subtotal_ht · tax_amount · total_ttc
+                Svc->>Log: log(création, module invoices)
+                Svc->>DB: COMMIT
+            end
+        end
+
+        Svc-->>Ctrl: Facture émise
+        Ctrl-->>V: Redirection vers invoices/show
+        V-->>C: « La facture FAC-2026-0005 a été émise »
+    end
+
+    opt Édition du document officiel
+        C->>Ctrl: GET /invoices/{id}/pdf
+        Ctrl->>Svc: generatePdf(facture)
+        Svc->>Svc: Ventilation de la TVA par taux (tax_breakdown)
+        Svc-->>C: Facture PDF A4 — mentions légales, ICE, IF, RC
+    end

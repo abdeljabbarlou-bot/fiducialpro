@@ -1,0 +1,44 @@
+flowchart TD
+    A([Début — mission facturable achevée]) --> B[/Le comptable saisit<br/>les lignes de prestations/]
+    B --> C{Taux de TVA légal ?<br/>20, 14, 10, 7, 0 %}
+    C -- Non --> C1[Rejet de la saisie<br/>message de validation]
+    C1 --> B
+    C -- Oui --> D[Calcul automatique<br/>HT · TVA par taux · TTC]
+    D --> E[Génération de la référence<br/>chronologique FAC-AAAA-NNNN]
+    E --> F{Référence déjà attribuée ?}
+    F -- Oui --> E
+    F -- Non --> G[Enregistrement de la facture<br/>statut : Émise]
+    G --> H[Édition du PDF officiel<br/>mentions légales · ICE · IF · RC]
+    H --> I[/Envoi de la facture au client/]
+
+    I --> J{Règlement reçu<br/>avant l'échéance ?}
+    J -- Non --> K[Bascule automatique<br/>statut : En retard]
+    K --> L[Relance du client]
+    L --> M
+    J -- Oui --> M[/Saisie de l'encaissement/]
+
+    M --> N{Date d'encaissement<br/>cohérente ?}
+    N -- Non --> N1[Refus : date postdatée ou<br/>antérieure à l'émission]
+    N1 --> M
+    N -- Oui --> O[Verrouillage de la facture<br/>SELECT ... FOR UPDATE]
+    O --> P{Montant ≤ solde<br/>restant dû ? — RG08}
+    P -- Non --> P1[Refus du sur-paiement<br/>transaction annulée]
+    P1 --> M
+    P -- Oui --> Q[Enregistrement du règlement<br/>+ journal d'audit]
+    Q --> R[Recalcul du solde et du statut]
+    R --> S{Solde restant dû = 0 ?}
+    S -- Non --> T[Statut : Partiellement payée]
+    T --> M
+    S -- Oui --> U[Statut : Payée]
+    U --> V[Édition du reçu<br/>de règlement acquitté]
+    V --> W([Fin — créance recouvrée])
+
+    style A fill:#0f172a,color:#fff
+    style W fill:#10b981,color:#fff
+    style C fill:#fef3c7
+    style N fill:#fef3c7
+    style P fill:#fef3c7
+    style C1 fill:#fee2e2
+    style N1 fill:#fee2e2
+    style P1 fill:#fee2e2
+    style K fill:#fee2e2
