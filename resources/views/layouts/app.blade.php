@@ -143,11 +143,13 @@
                     <span>Collaborateurs</span>
                 </a>
 
-                <a href="{{ route('reports.index') }}" 
+                @unless(auth()->user()->hasRole('secretaire'))
+                <a href="{{ route('reports.index') }}"
                    class="flex items-center px-3.5 py-2.5 rounded-lg transition-colors {{ request()->routeIs('reports.*') ? 'bg-sky-600 text-white shadow-sm' : 'hover:bg-slate-800/80 hover:text-white' }}">
                     <i class="fa-solid fa-chart-line w-6 text-base"></i>
                     <span>Rapports & Exports</span>
                 </a>
+                @endunless
 
                 @if(auth()->user()->isAdmin() || auth()->user()->isGerant())
                 <a href="{{ route('activity-logs.index') }}" 

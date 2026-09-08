@@ -160,6 +160,7 @@
   <path d="M 235 285 L 470 280" class="lien-s"/>
   <path d="M 235 292 C 330 320, 400 332, 470 334" class="lien-s"/>
   <path d="M 235 298 C 330 355, 400 384, 470 388" class="lien-s"/>
+  <path d="M 232 300 C 310 500, 390 800, 470 966" class="lien-s"/>
 
   <!-- ============ ASSOCIATIONS : COMPTABLE (droite) ============ -->
   <path d="M 925 452 C 860 300, 830 190, 770 172" class="lien-c"/>

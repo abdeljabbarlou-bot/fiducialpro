@@ -95,9 +95,12 @@ Route::middleware('auth')->group(function () {
     // Employés (Collaborateurs)
     Route::resource('employees', EmployeeController::class);
 
-    // Rapports
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::match(['get', 'post'], '/reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
+    // Rapports & exports — les états financiers du cabinet (chiffre d'affaires,
+    // créances, encaissements) ne sont pas accessibles au profil Secrétaire.
+    Route::middleware('role:admin,gerant,comptable')->group(function () {
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::match(['get', 'post'], '/reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
+    });
 
     // Journal d'Audit & Corbeille (Administrateurs & Gérants)
     Route::middleware('role:admin,gerant')->group(function () {

@@ -711,6 +711,25 @@ class FiduciaireBusinessRulesTest extends TestCase
     }
 
     /**
+     * Test RBAC (matrice §4, Rapports & Exports) : les états financiers du cabinet
+     * (chiffre d'affaires, créances, encaissements) sont interdits à la Secrétaire.
+     */
+    public function test_rbac_secretaire_cannot_access_financial_reports(): void
+    {
+        $secretaire = User::where('email', 'secretaire@cabinet.ma')->first();
+        $comptable = User::where('email', 'comptable1@cabinet.ma')->first();
+
+        $this->actingAs($secretaire)->get('/reports')->assertStatus(403);
+        $this->actingAs($secretaire)->post('/reports/generate', [
+            'report_type' => 'financial',
+            'format' => 'excel',
+        ])->assertStatus(403);
+
+        // Le comptable, lui, y a accès
+        $this->actingAs($comptable)->get('/reports')->assertStatus(200);
+    }
+
+    /**
      * Test RG02 : une fiche supprimée reste consultable et restaurable depuis la corbeille.
      */
     public function test_deleted_client_can_be_restored_from_trash(): void

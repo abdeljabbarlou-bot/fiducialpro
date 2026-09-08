@@ -17,10 +17,12 @@
         </div>
 
         <div class="flex items-center space-x-3">
+            @unless(auth()->user()->hasRole('secretaire'))
             <a href="{{ route('reports.index') }}" class="px-4 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold transition-colors flex items-center space-x-2">
                 <i class="fa-solid fa-file-export text-slate-400"></i>
                 <span>Générer un rapport</span>
             </a>
+            @endunless
             <a href="{{ route('clients.create') }}" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-md shadow-sky-500/20 transition-all flex items-center space-x-2">
                 <i class="fa-solid fa-plus"></i>
                 <span>Nouveau Client</span>
