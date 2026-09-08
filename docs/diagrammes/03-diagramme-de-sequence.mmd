@@ -18,12 +18,13 @@ sequenceDiagram
         BD-->>S: 9 : Confirmation
         S->>BD: 10 : Mettre a jour le statut de la facture
         S->>BD: 11 : Tracer l'operation dans le journal
-        S-->>C: 12 : Paiement enregistre
-        C-->>I: 13 : Confirmation
-        I-->>U: 14 : AFFICHER LE RECU ACQUITTE
+        S->>BD: 12 : Creer la notification
+        S-->>C: 13 : Paiement enregistre
+        C-->>I: 14 : Confirmation
+        I-->>U: 15 : AFFICHER LE RECU ACQUITTE
     else Montant superieur au solde restant du
-        S->>BD: 15 : Annuler la transaction
-        S-->>C: 16 : Sur-paiement refuse
-        C-->>I: 17 : Refus
-        I-->>U: 18 : MESSAGE D'ERREUR
+        S->>BD: 16 : Annuler la transaction
+        S-->>C: 17 : Sur-paiement refuse
+        C-->>I: 18 : Refus
+        I-->>U: 19 : MESSAGE D'ERREUR
     end

@@ -1,9 +1,13 @@
 <?php
 
 /*
- * Ajoute un fond quadrillé (papier millimétré) aux diagrammes SVG rendus par
- * Mermaid, afin d'obtenir la présentation classique des ateliers de modélisation
- * UML utilisée dans le rapport.
+ * Met en forme les diagrammes SVG rendus par Mermaid selon la présentation
+ * classique des ateliers de modélisation UML retenue pour le rapport :
+ *
+ *   1. ajout d'un fond quadrillé (papier millimétré) ;
+ *   2. normalisation monochrome des teintes que Mermaid inscrit directement
+ *      en attributs dans le SVG et qui échappent donc au thème ;
+ *   3. lignes de vie des diagrammes de séquence tracées en pointillés.
  *
  * Usage : php ajouter-grille.php fichier1.svg [fichier2.svg ...]
  */
@@ -65,9 +69,41 @@ XML;
     // Insertion juste après la balise <svg ...>
     $svg = preg_replace('/(<svg\b[^>]*>)/', "$1\n{$defs}\n", $svg, 1);
 
+    $svg = normaliserMonochrome($svg);
+
     file_put_contents($chemin, $svg);
 
     return true;
+}
+
+/**
+ * Ramène en noir et blanc les teintes que Mermaid écrit en dur dans le SVG
+ * (fonds des participants, lignes de vie, bordures) et met les lignes de vie
+ * en pointillés, conformément à la notation UML classique.
+ */
+function normaliserMonochrome(string $svg): string
+{
+    $remplacements = [
+        'fill="#eaeaea"' => 'fill="#ffffff"',
+        'fill="#ECECFF"' => 'fill="#ffffff"',
+        'fill:#e0e0e0'   => 'fill:#ffffff',
+        'fill:#eaeaea'   => 'fill:#ffffff',
+        'stroke="#666"'  => 'stroke="#000000"',
+        'stroke="#999"'  => 'stroke="#000000"',
+        'stroke:#666'    => 'stroke:#000000',
+        'stroke:#999'    => 'stroke:#000000',
+    ];
+
+    $svg = str_replace(array_keys($remplacements), array_values($remplacements), $svg);
+
+    // Lignes de vie en pointillés (diagrammes de séquence)
+    $svg = preg_replace(
+        '/(<line\b[^>]*class="actor-line[^"]*")/',
+        '$1 stroke-dasharray="5 4"',
+        $svg
+    );
+
+    return $svg;
 }
 
 $fichiers = array_slice($argv, 1);
