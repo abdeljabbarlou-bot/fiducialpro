@@ -1,0 +1,42 @@
+stateDiagram-v2
+    direction TB
+
+    [*] --> brouillon : Création de la facture
+
+    state "Brouillon" as brouillon
+    state "Émise" as emise
+    state "Partiellement payée" as partielle
+    state "Payée" as payee
+    state "En retard" as retard
+    state "Annulée" as annulee
+
+    brouillon --> emise : Validation et envoi au client
+    brouillon --> annulee : Abandon avant émission
+
+    emise --> partielle : Encaissement partiel<br/>(0 < payé < TTC)
+    emise --> payee : Encaissement intégral<br/>(reste dû = 0)
+    emise --> retard : Échéance dépassée<br/>sans règlement
+    emise --> annulee : Annulation
+
+    partielle --> payee : Solde intégralement réglé
+    partielle --> retard : Échéance dépassée<br/>avec solde restant
+    partielle --> annulee : Annulation
+
+    retard --> partielle : Encaissement partiel
+    retard --> payee : Solde régularisé
+    retard --> annulee : Créance abandonnée
+
+    payee --> [*]
+    annulee --> [*]
+
+    note right of payee
+        État terminal : une facture
+        entièrement réglée ne peut
+        plus être modifiée
+    end note
+
+    note left of retard
+        Transition évaluée automatiquement
+        à chaque recalcul (RG07)
+        par recalculatePaymentStatus()
+    end note

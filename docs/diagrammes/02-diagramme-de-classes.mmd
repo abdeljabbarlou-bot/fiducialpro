@@ -1,0 +1,234 @@
+classDiagram
+    direction TB
+
+    class Role {
+        +int id
+        +string name
+        +string slug
+        +string description
+        +users()
+    }
+
+    class User {
+        +int id
+        +int role_id
+        +string name
+        +string email
+        +string password
+        +string status
+        +datetime last_login_at
+        +string last_login_ip
+        +hasRole(roles) bool
+        +isAdmin() bool
+        +isActive() bool
+    }
+
+    class Employee {
+        +int id
+        +int user_id
+        +string matricule
+        +string cin
+        +string first_name
+        +string last_name
+        +string position
+        +date hire_date
+        +decimal salary
+        +string status
+        +getFullName() string
+    }
+
+    class Client {
+        +int id
+        +string type
+        +string company_name
+        +string trade_name
+        +string legal_form
+        +string ice
+        +string if_number
+        +string rc_number
+        +string patent_number
+        +string cnss_number
+        +decimal share_capital
+        +string city
+        +string status
+        +scopeSearch(terme)
+        +getDisplayName() string
+    }
+
+    class ClientContact {
+        +int id
+        +int client_id
+        +string first_name
+        +string last_name
+        +string cin
+        +string position
+        +bool is_primary
+        +getFullName() string
+    }
+
+    class Dossier {
+        +int id
+        +string reference
+        +int client_id
+        +string type
+        +date start_date
+        +date end_date
+        +string status
+        +string priority
+        +int responsible_id
+        +getTypeLabel() string
+        +getStatusLabel() string
+    }
+
+    class DossierEmployee {
+        +int dossier_id
+        +int employee_id
+        +string role_in_dossier
+        +date assigned_date
+        +date end_date
+        +string status
+    }
+
+    class DeclarationType {
+        +int id
+        +string code
+        +string name
+        +string periodicity
+    }
+
+    class Declaration {
+        +int id
+        +int client_id
+        +int dossier_id
+        +int declaration_type_id
+        +string period
+        +date due_date
+        +date filing_date
+        +decimal amount
+        +string filing_reference
+        +string status
+        +int responsible_id
+        +checkOverdue() bool
+        +scopeOverdue()
+        +getStatusLabel() string
+    }
+
+    class Invoice {
+        +int id
+        +string reference
+        +int client_id
+        +date invoice_date
+        +date due_date
+        +decimal subtotal_ht
+        +decimal tax_amount
+        +decimal total_ttc
+        +decimal paid_amount
+        +decimal remaining_amount
+        +string status
+        +recalculateTotals() void
+        +recalculatePaymentStatus() void
+        +getTaxBreakdown() Collection
+    }
+
+    class InvoiceItem {
+        +int id
+        +int invoice_id
+        +string description
+        +decimal quantity
+        +decimal unit_price
+        +decimal tax_rate
+        +decimal total_ht
+        +decimal total_ttc
+        +saving() void
+    }
+
+    class Payment {
+        +int id
+        +int invoice_id
+        +int client_id
+        +date payment_date
+        +decimal amount
+        +string payment_method
+        +string reference
+        +string bank
+        +getMethodLabel() string
+    }
+
+    class Document {
+        +int id
+        +string title
+        +string category
+        +int client_id
+        +int dossier_id
+        +string file_path
+        +string file_name
+        +int file_size
+        +string mime_type
+        +int uploaded_by
+        +getFormattedSize() string
+    }
+
+    class Deadline {
+        +int id
+        +string title
+        +string type
+        +int client_id
+        +int dossier_id
+        +date due_date
+        +string priority
+        +string status
+        +int responsible_id
+        +scopeUpcoming(jours)
+    }
+
+    class ActivityLog {
+        +int id
+        +int user_id
+        +string user_name
+        +string action
+        +string module
+        +int target_id
+        +string description
+        +string ip_address
+        +string user_agent
+        +log(action, module, description)$
+    }
+
+    class Notification {
+        +int id
+        +int user_id
+        +string title
+        +string message
+        +string type
+        +string link
+        +bool is_read
+    }
+
+    Role "1" --> "0..*" User : définit le rôle de
+    User "1" --> "0..1" Employee : est le compte de
+    User "1" --> "0..*" ActivityLog : génère
+    User "1" --> "0..*" Notification : reçoit
+    User "1" --> "0..*" Document : téléverse
+
+    Client "1" *-- "0..*" ClientContact : représentants légaux
+    Client "1" --> "0..*" Dossier : confie
+    Client "1" --> "0..*" Declaration : est redevable de
+    Client "1" --> "0..*" Invoice : est facturé
+    Client "1" --> "0..*" Payment : règle
+    Client "1" --> "0..*" Document : fournit
+    Client "1" --> "0..*" Deadline : concerné par
+
+    Dossier "0..*" -- "0..*" Employee : affectation
+    DossierEmployee ..> Dossier : classe-association
+    DossierEmployee ..> Employee
+
+    Employee "1" --> "0..*" Dossier : est responsable de
+    Employee "1" --> "0..*" Declaration : est responsable de
+    Employee "1" --> "0..*" Deadline : est responsable de
+
+    Dossier "1" --> "0..*" Declaration : porte
+    Dossier "1" --> "0..*" Document : archive
+    DeclarationType "1" --> "0..*" Declaration : typé par
+
+    Invoice "1" *-- "1..*" InvoiceItem : lignes de prestations
+    Invoice "1" --> "0..*" Payment : encaissements

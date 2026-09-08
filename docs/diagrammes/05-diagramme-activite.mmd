@@ -1,0 +1,54 @@
+flowchart TD
+
+    A([Nouveau client au cabinet]) --> B[/Création de la fiche client<br/>ICE · IF · RC · patente · CNSS/]
+    B --> C{ICE valide ?<br/>15 chiffres, unique}
+    C -- Non --> B
+    C -- Oui --> D[Ouverture du dossier de mission<br/>DOS-AAAA-NNNN]
+    D --> E[Affectation de l'équipe<br/>et désignation du responsable]
+    E --> FORK[ ]
+
+    FORK --> G[Création de la déclaration<br/>statut : À préparer]
+    FORK --> M[/Saisie des lignes de prestations<br/>à facturer/]
+
+    G --> H[/Collecte des pièces<br/>justificatives dans la GED/]
+    H --> I[Préparation et contrôle<br/>de la liasse fiscale]
+    I --> J{Échéance légale<br/>respectée ?}
+    J -- Non --> J1[RG11 — bascule automatique<br/>statut : En retard + alerte]
+    J1 --> K
+    J -- Oui --> K[/Télétransmission DGI — SIMPL<br/>et saisie du récépissé/]
+    K --> L[Statut : Déposée]
+    L --> JOIN[ ]
+
+    M --> N{Taux de TVA légal ?<br/>20 · 14 · 10 · 7 · 0 %}
+    N -- Non --> M
+    N -- Oui --> O[Calcul HT · TVA par taux · TTC<br/>référence FAC-AAAA-NNNN]
+    O --> P[Édition de la facture PDF<br/>et envoi au client]
+    P --> Q{Règlement reçu<br/>avant l'échéance ?}
+    Q -- Non --> Q1[Statut : En retard<br/>+ relance du client]
+    Q1 --> R
+    Q -- Oui --> R[/Saisie de l'encaissement/]
+    R --> S{Date cohérente et<br/>montant ≤ solde dû ? — RG08}
+    S -- Non --> S1[Refus : date incohérente<br/>ou sur-paiement]
+    S1 --> R
+    S -- Oui --> T[Enregistrement sous verrou<br/>+ journal d'audit]
+    T --> U{Solde restant dû = 0 ?}
+    U -- Non --> U1[Statut : Partiellement payée]
+    U1 --> R
+    U -- Oui --> V[Statut : Payée + reçu acquitté]
+    V --> JOIN
+
+    JOIN --> W([Mission accomplie :<br/>obligations déposées et honoraires recouvrés])
+
+    style A fill:#0f172a,color:#fff
+    style W fill:#10b981,color:#fff
+    style FORK fill:#0f172a,stroke:#0f172a,color:#fff
+    style JOIN fill:#0f172a,stroke:#0f172a,color:#fff
+    style C fill:#fef3c7
+    style J fill:#fef3c7
+    style N fill:#fef3c7
+    style Q fill:#fef3c7
+    style S fill:#fef3c7
+    style U fill:#fef3c7
+    style J1 fill:#fee2e2
+    style Q1 fill:#fee2e2
+    style S1 fill:#fee2e2
