@@ -1,78 +1,29 @@
 sequenceDiagram
-    autonumber
-    actor C as Comptable
-    participant V as Interface web
-    participant IC as InvoiceController
-    participant IS as InvoiceService
-    participant PC as PaymentController
-    participant PS as PaymentService
-    participant M as Modèles Eloquent
-    participant DB as Base de données
-    participant Log as ActivityLog
+    actor U as COMPTABLE
+    participant I as INTERFACE
+    participant C as CONTROLEUR
+    participant S as SERVICE METIER
+    participant BD as BASE DE DONNEES
 
-    Note over C,Log: PHASE 1 — Émission de la facture d'honoraires
+    U->>I: 1 : SAISIR LE REGLEMENT
+    I->>C: 2 : Envoyer le formulaire
+    C->>C: 3 : Valider la date d'encaissement
+    C->>S: 4 : Enregistrer le paiement
+    S->>BD: 5 : Verrouiller la facture
+    BD-->>S: 6 : Montant deja encaisse
+    S->>S: 7 : Calculer le solde restant du
 
-    C->>V: Saisit le client, les dates et les lignes de prestations
-    V->>IC: POST /invoices
-    IC->>IC: Contrôle du rôle puis validate()<br/>taux de TVA ∈ {20, 14, 10, 7, 0} · due_date ≥ invoice_date
-
-    alt Taux de TVA non conforme au CGI
-        IC-->>V: Rejet — « Le champ taux de TVA est invalide »
-    else Données conformes
-        IC->>IS: createInvoice(données, lignes, userId)
-
-        loop Jusqu'à 5 tentatives — RG06
-            IS->>DB: BEGIN TRANSACTION
-            IS->>IS: generateReference() → FAC-AAAA-NNNN
-            IS->>DB: INSERT invoice
-
-            alt Référence prise par une émission simultanée
-                DB-->>IS: UniqueConstraintViolationException
-                IS->>DB: ROLLBACK
-                Note over IS: Régénère la référence et retente
-            else Référence disponible
-                IS->>DB: INSERT invoice_items
-                Note over M,DB: Le hook saving() calcule<br/>total_ht et total_ttc de chaque ligne
-                IS->>M: recalculateTotals()
-                M->>DB: UPDATE subtotal_ht · tax_amount · total_ttc
-                IS->>Log: log(création, module invoices)
-                IS->>DB: COMMIT
-            end
-        end
-
-        IS-->>IC: Facture émise — statut « Émise »
-        IC-->>C: Facture PDF A4 (ICE, IF, RC, TVA ventilée par taux)
-    end
-
-    Note over C,Log: PHASE 2 — Encaissement du règlement client
-
-    C->>V: Saisit le montant, la date et le mode de règlement
-    V->>PC: POST /payments
-    PC->>PC: validate() — date ≤ aujourd'hui
-    PC->>DB: SELECT invoice
-
-    alt Date postdatée ou antérieure à l'émission
-        PC-->>C: Refus — date d'encaissement incohérente
-    else Date cohérente
-        PC->>PS: recordPayment(facture, données, userId)
-        PS->>DB: BEGIN TRANSACTION
-        PS->>DB: SELECT ... FOR UPDATE
-        Note over PS,DB: Verrou pessimiste : empêche deux<br/>encaissements concurrents sur la même facture
-        PS->>DB: SUM(payments.amount) déjà encaissé
-        PS->>PS: soldeRestant = total_ttc − déjà encaissé
-
-        alt Montant > solde restant dû — RG08
-            PS->>DB: ROLLBACK
-            PS-->>PC: Exception « dépasse le solde restant à payer »
-            PC-->>C: Encaissement refusé
-        else Montant ≤ solde restant dû
-            PS->>DB: INSERT payment
-            PS->>M: recalculatePaymentStatus()
-            Note over M: Transition d'état RG07 :<br/>Émise → Partiellement payée → Payée
-            M->>DB: UPDATE paid_amount · remaining_amount · status
-            PS->>Log: log(paiement, adresse IP, user-agent)
-            PS->>DB: COMMIT
-            PS-->>PC: Règlement enregistré
-            PC-->>C: Confirmation + reçu de règlement acquitté
-        end
+    alt Montant inferieur ou egal au solde restant du
+        S->>BD: 8 : Enregistrer le paiement
+        BD-->>S: 9 : Confirmation
+        S->>BD: 10 : Mettre a jour le statut de la facture
+        S->>BD: 11 : Tracer l'operation dans le journal
+        S-->>C: 12 : Paiement enregistre
+        C-->>I: 13 : Confirmation
+        I-->>U: 14 : AFFICHER LE RECU ACQUITTE
+    else Montant superieur au solde restant du
+        S->>BD: 15 : Annuler la transaction
+        S-->>C: 16 : Sur-paiement refuse
+        C-->>I: 17 : Refus
+        I-->>U: 18 : MESSAGE D'ERREUR
     end
