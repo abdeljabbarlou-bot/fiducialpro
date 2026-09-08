@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 780" width="1120" height="780" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <pattern id="quadrillageFin" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d3dde6" stroke-width="0.9"/>
+    </pattern>
+    <pattern id="fondQuadrille" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#ffffff"/>
+      <rect width="100" height="100" fill="url(#quadrillageFin)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b4c4d2" stroke-width="1.6"/>
+    </pattern>
+  </defs>
+
+  <style>
+    .noeud     { fill: #ffffff; stroke: #000000; stroke-width: 1.2; }
+    .noeud-top { fill: #f2f2f2; stroke: #000000; stroke-width: 1.2; }
+    .noeud-nom { font-size: 12px; fill: #000000; text-anchor: middle; font-weight: bold; }
+    .stereo    { font-size: 9px; fill: #000000; text-anchor: middle; font-style: italic; }
+    .artefact  { fill: #ffffff; stroke: #000000; stroke-width: 1; }
+    .art-txt   { font-size: 10px; fill: #000000; text-anchor: middle; }
+    .lien      { stroke: #000000; stroke-width: 1.2; fill: none; }
+    .lien-txt  { font-size: 9.5px; fill: #000000; text-anchor: middle; }
+    .note-txt  { font-size: 9px; fill: #000000; text-anchor: middle; font-style: italic; }
+  </style>
+
+  <rect x="0" y="0" width="1120" height="780" fill="url(#fondQuadrille)"/>
+
+  <!-- ============ NŒUD : Poste de travail ============ -->
+  <g>
+    <polygon points="80,150 110,120 320,120 320,150" class="noeud-top"/>
+    <polygon points="320,120 320,150 320,280 320,250 350,250 350,120" class="noeud-top"/>
+    <rect x="80" y="150" width="240" height="130" class="noeud"/>
+    <text x="200" y="172" class="stereo">&#171;dispositif&#187;</text>
+    <text x="200" y="190" class="noeud-nom">Poste de travail</text>
+    <text x="200" y="206" class="stereo">collaborateur du cabinet</text>
+
+    <rect x="106" y="222" width="188" height="42" class="artefact"/>
+    <rect x="276" y="228" width="12" height="9" class="artefact"/>
+    <text x="196" y="240" class="stereo">&#171;artefact&#187;</text>
+    <text x="196" y="256" class="art-txt">Navigateur web</text>
+  </g>
+
+  <!-- ============ NŒUD : Serveur d'application ============ -->
+  <g>
+    <polygon points="440,150 470,120 780,120 780,150" class="noeud-top"/>
+    <polygon points="780,120 780,150 780,450 780,420 810,420 810,120" class="noeud-top"/>
+    <rect x="440" y="150" width="340" height="300" class="noeud"/>
+    <text x="610" y="172" class="stereo">&#171;dispositif&#187;</text>
+    <text x="610" y="190" class="noeud-nom">Serveur d'application</text>
+
+    <!-- Environnement d'execution -->
+    <polygon points="470,240 490,220 750,220 750,240" class="noeud-top"/>
+    <polygon points="750,220 750,240 750,420 750,400 770,400 770,220" class="noeud-top"/>
+    <rect x="470" y="240" width="280" height="180" class="noeud"/>
+    <text x="610" y="262" class="stereo">&#171;environnement d'exécution&#187;</text>
+    <text x="610" y="280" class="noeud-nom">Apache / PHP 8.2</text>
+
+    <rect x="496" y="298" width="228" height="46" class="artefact"/>
+    <rect x="706" y="304" width="12" height="9" class="artefact"/>
+    <text x="610" y="316" class="stereo">&#171;artefact&#187;</text>
+    <text x="610" y="332" class="art-txt">Application FiducialPro (Laravel)</text>
+
+    <rect x="496" y="356" width="228" height="46" class="artefact"/>
+    <rect x="706" y="362" width="12" height="9" class="artefact"/>
+    <text x="610" y="374" class="stereo">&#171;artefact&#187;</text>
+    <text x="610" y="390" class="art-txt">Ressources compilées (Vite)</text>
+  </g>
+
+  <!-- ============ NŒUD : Serveur de base de données ============ -->
+  <g>
+    <polygon points="440,560 470,530 780,530 780,560" class="noeud-top"/>
+    <polygon points="780,530 780,560 780,700 780,670 810,670 810,530" class="noeud-top"/>
+    <rect x="440" y="560" width="340" height="140" class="noeud"/>
+    <text x="610" y="582" class="stereo">&#171;dispositif&#187;</text>
+    <text x="610" y="600" class="noeud-nom">Serveur de base de données</text>
+
+    <rect x="496" y="620" width="228" height="46" class="artefact"/>
+    <rect x="706" y="626" width="12" height="9" class="artefact"/>
+    <text x="610" y="638" class="stereo">&#171;artefact&#187;</text>
+    <text x="610" y="654" class="art-txt">Base relationnelle MySQL</text>
+  </g>
+
+  <!-- ============ NŒUD : Stockage documentaire ============ -->
+  <g>
+    <polygon points="880,330 905,305 1070,305 1070,330" class="noeud-top"/>
+    <polygon points="1070,305 1070,330 1070,450 1070,425 1095,425 1095,305" class="noeud-top"/>
+    <rect x="880" y="330" width="190" height="120" class="noeud"/>
+    <text x="975" y="352" class="stereo">&#171;dispositif&#187;</text>
+    <text x="975" y="370" class="noeud-nom">Serveur de fichiers</text>
+
+    <rect x="902" y="392" width="146" height="42" class="artefact"/>
+    <rect x="1030" y="398" width="12" height="9" class="artefact"/>
+    <text x="975" y="410" class="stereo">&#171;artefact&#187;</text>
+    <text x="975" y="426" class="art-txt">Pièces GED</text>
+  </g>
+
+  <!-- ============ NŒUD EXTERNE : DGI ============ -->
+  <g>
+    <polygon points="80,470 105,445 320,445 320,470" class="noeud-top"/>
+    <polygon points="320,445 320,470 320,590 320,565 345,565 345,445" class="noeud-top"/>
+    <rect x="80" y="470" width="240" height="120" class="noeud"/>
+    <text x="200" y="492" class="stereo">&#171;dispositif externe&#187;</text>
+    <text x="200" y="510" class="noeud-nom">Portail DGI</text>
+
+    <rect x="106" y="532" width="188" height="42" class="artefact"/>
+    <text x="200" y="550" class="stereo">&#171;service&#187;</text>
+    <text x="200" y="566" class="art-txt">SIMPL / DAMANCOM</text>
+  </g>
+
+  <!-- ============ CHEMINS DE COMMUNICATION ============ -->
+  <line x1="320" y1="215" x2="440" y2="215" class="lien"/>
+  <text x="380" y="205" class="lien-txt">HTTPS</text>
+  <text x="380" y="232" class="note-txt">TCP/IP</text>
+
+  <line x1="610" y1="450" x2="610" y2="560" class="lien"/>
+  <text x="662" y="500" class="lien-txt">TCP/IP</text>
+  <text x="662" y="518" class="note-txt">port 3306</text>
+
+  <line x1="780" y1="330" x2="880" y2="360" class="lien"/>
+  <text x="828" y="330" class="lien-txt">SMB</text>
+
+  <line x1="200" y1="280" x2="200" y2="445" class="lien"/>
+  <text x="252" y="360" class="lien-txt">HTTPS</text>
+  <text x="252" y="378" class="note-txt">télédéclaration</text>
+</svg>

@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 760" width="1120" height="760" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <pattern id="quadrillageFin" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d3dde6" stroke-width="0.9"/>
+    </pattern>
+    <pattern id="fondQuadrille" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#ffffff"/>
+      <rect width="100" height="100" fill="url(#quadrillageFin)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b4c4d2" stroke-width="1.6"/>
+    </pattern>
+    <marker id="flecheMsg" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M 0 0 L 9 4 L 0 8 Z" fill="#000000"/>
+    </marker>
+  </defs>
+
+  <style>
+    .objet    { fill: #ffffff; stroke: #000000; stroke-width: 1.2; }
+    .objet-t  { font-size: 11px; fill: #000000; text-anchor: middle;
+                text-decoration: underline; }
+    .acteur   { stroke: #000000; stroke-width: 1.3; fill: none; }
+    .lien     { stroke: #000000; stroke-width: 1.1; fill: none; }
+    .msg      { stroke: #000000; stroke-width: 1; fill: none; marker-end: url(#flecheMsg); }
+    .msg-txt  { font-size: 9.5px; fill: #000000; }
+    .titre    { font-size: 12px; fill: #000000; font-weight: bold; }
+  </style>
+
+  <rect x="0" y="0" width="1120" height="760" fill="url(#fondQuadrille)"/>
+
+  <text x="40" y="40" class="titre">Enregistrement d'un règlement client</text>
+
+  <!-- ================= ACTEUR ================= -->
+  <g transform="translate(90, 220)">
+    <circle cx="0" cy="-24" r="11" class="acteur"/>
+    <line x1="0" y1="-13" x2="0" y2="14" class="acteur"/>
+    <line x1="-16" y1="-2" x2="16" y2="-2" class="acteur"/>
+    <line x1="0" y1="14" x2="-13" y2="36" class="acteur"/>
+    <line x1="0" y1="14" x2="13" y2="36" class="acteur"/>
+    <text x="0" y="54" class="objet-t">: Comptable</text>
+  </g>
+
+  <!-- ================= OBJETS ================= -->
+  <g>
+    <rect x="250" y="190" width="170" height="46" class="objet"/>
+    <text x="335" y="218" class="objet-t">: InterfaceWeb</text>
+  </g>
+
+  <g>
+    <rect x="250" y="380" width="170" height="46" class="objet"/>
+    <text x="335" y="408" class="objet-t">: PaymentController</text>
+  </g>
+
+  <g>
+    <rect x="530" y="380" width="170" height="46" class="objet"/>
+    <text x="615" y="408" class="objet-t">: PaymentService</text>
+  </g>
+
+  <g>
+    <rect x="530" y="180" width="170" height="46" class="objet"/>
+    <text x="615" y="208" class="objet-t">: Invoice</text>
+  </g>
+
+  <g>
+    <rect x="830" y="180" width="170" height="46" class="objet"/>
+    <text x="915" y="208" class="objet-t">: Payment</text>
+  </g>
+
+  <g>
+    <rect x="830" y="380" width="170" height="46" class="objet"/>
+    <text x="915" y="408" class="objet-t">: BaseDeDonnees</text>
+  </g>
+
+  <g>
+    <rect x="530" y="580" width="170" height="46" class="objet"/>
+    <text x="615" y="608" class="objet-t">: ActivityLog</text>
+  </g>
+
+  <g>
+    <rect x="830" y="580" width="170" height="46" class="objet"/>
+    <text x="915" y="608" class="objet-t">: Notification</text>
+  </g>
+
+  <!-- ================= LIENS ENTRE OBJETS ================= -->
+  <line x1="128" y1="213" x2="250" y2="213" class="lien"/>
+  <line x1="335" y1="236" x2="335" y2="380" class="lien"/>
+  <line x1="420" y1="403" x2="530" y2="403" class="lien"/>
+  <line x1="615" y1="380" x2="615" y2="226" class="lien"/>
+  <line x1="700" y1="395" x2="830" y2="395" class="lien"/>
+  <line x1="700" y1="196" x2="830" y2="196" class="lien"/>
+  <line x1="615" y1="426" x2="615" y2="580" class="lien"/>
+  <line x1="700" y1="412" x2="830" y2="580" class="lien"/>
+
+  <!-- ================= MESSAGES ================= -->
+  <!-- 1 : Comptable -> InterfaceWeb -->
+  <path d="M 150 198 L 232 198" class="msg"/>
+  <text x="140" y="190" class="msg-txt">1 : saisirReglement()</text>
+
+  <!-- 2 : InterfaceWeb -> PaymentController -->
+  <path d="M 320 250 L 320 366" class="msg"/>
+  <text x="160" y="300" class="msg-txt">2 : envoyerFormulaire()</text>
+
+  <!-- 3 : PaymentController (auto-appel) -->
+  <path d="M 268 380 C 240 350, 280 336, 306 366" class="msg"/>
+  <text x="150" y="348" class="msg-txt">3 : validerDate()</text>
+
+  <!-- 4 : PaymentController -> PaymentService -->
+  <path d="M 434 390 L 516 390" class="msg"/>
+  <text x="408" y="380" class="msg-txt">4 : enregistrerPaiement()</text>
+
+  <!-- 5 : PaymentService -> Invoice -->
+  <path d="M 601 366 L 601 240" class="msg"/>
+  <text x="440" y="300" class="msg-txt">5 : verrouiller()</text>
+
+  <!-- 6 : Invoice -> PaymentService -->
+  <path d="M 629 240 L 629 366" class="msg"/>
+  <text x="640" y="300" class="msg-txt">6 : soldeRestantDu()</text>
+
+  <!-- 7 : PaymentService -> Payment -->
+  <path d="M 714 188 L 816 188" class="msg"/>
+  <text x="700" y="178" class="msg-txt">7 : creer()</text>
+
+  <!-- 8 : PaymentService -> BaseDeDonnees -->
+  <path d="M 714 388 L 816 388" class="msg"/>
+  <text x="700" y="378" class="msg-txt">8 : persister()</text>
+
+  <!-- 9 : PaymentService -> Invoice -->
+  <path d="M 587 366 L 587 240" class="msg"/>
+  <text x="400" y="258" class="msg-txt">9 : recalculerStatut()</text>
+
+  <!-- 10 : PaymentService -> ActivityLog -->
+  <path d="M 601 440 L 601 566" class="msg"/>
+  <text x="440" y="510" class="msg-txt">10 : tracer()</text>
+
+  <!-- 11 : PaymentService -> Notification -->
+  <path d="M 714 420 L 818 566" class="msg"/>
+  <text x="726" y="500" class="msg-txt">11 : notifier()</text>
+
+  <!-- 12 : retour vers l'acteur -->
+  <path d="M 262 226 L 172 226" class="msg"/>
+  <text x="150" y="245" class="msg-txt">12 : afficherRecu()</text>
+
+  <!-- ================= NOTE ================= -->
+  <g>
+    <rect x="60" y="600" width="380" height="96" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+    <polygon points="420,600 440,600 440,620" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+    <text x="76" y="622" class="msg-txt" font-weight="bold">Règle de gestion RG08</text>
+    <text x="76" y="642" class="msg-txt">Le message 6 renvoie le solde restant dû. Si le montant</text>
+    <text x="76" y="660" class="msg-txt">saisi le dépasse, la transaction est annulée : les messages</text>
+    <text x="76" y="678" class="msg-txt">7 à 11 ne sont pas émis et le règlement est refusé.</text>
+  </g>
+</svg>

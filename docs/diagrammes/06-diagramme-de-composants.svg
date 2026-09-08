@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 900" width="1080" height="900" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <pattern id="quadrillageFin" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#d3dde6" stroke-width="0.9"/>
+    </pattern>
+    <pattern id="fondQuadrille" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#ffffff"/>
+      <rect width="100" height="100" fill="url(#quadrillageFin)"/>
+      <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b4c4d2" stroke-width="1.6"/>
+    </pattern>
+    <marker id="flecheOuverte" markerWidth="11" markerHeight="8" refX="10" refY="4" orient="auto">
+      <path d="M 0 0 L 10 4 L 0 8" fill="none" stroke="#000000" stroke-width="1.1"/>
+    </marker>
+  </defs>
+
+  <style>
+    .comp     { fill: #ffffff; stroke: #000000; stroke-width: 1.1; }
+    .comp-nom { font-size: 11px; fill: #000000; text-anchor: middle; }
+    .stereo   { font-size: 8.5px; fill: #000000; text-anchor: middle; font-style: italic; }
+    .couche   { fill: none; stroke: #000000; stroke-width: 1; stroke-dasharray: 6 4; }
+    .couche-t { font-size: 10px; fill: #000000; font-weight: bold; }
+    .dep      { stroke: #000000; stroke-width: 1; fill: none; stroke-dasharray: 5 4;
+                marker-end: url(#flecheOuverte); }
+    .dep-txt  { font-size: 8.5px; fill: #000000; text-anchor: middle; font-style: italic; }
+  </style>
+
+  <rect x="0" y="0" width="1080" height="900" fill="url(#fondQuadrille)"/>
+
+  <!-- ================= POSTE CLIENT ================= -->
+  <g>
+    <rect x="420" y="40" width="220" height="54" class="comp"/>
+    <rect x="410" y="52" width="20" height="12" class="comp"/>
+    <rect x="410" y="70" width="20" height="12" class="comp"/>
+    <text x="530" y="62" class="stereo">&#171;composant&#187;</text>
+    <text x="530" y="78" class="comp-nom">Navigateur web</text>
+  </g>
+
+  <path d="M 530 94 L 530 128" class="dep"/>
+  <text x="576" y="115" class="dep-txt">HTTP</text>
+
+  <!-- ================= COUCHE PRESENTATION ================= -->
+  <rect x="120" y="132" width="840" height="96" class="couche"/>
+  <text x="134" y="150" class="couche-t">COUCHE DE PRÉSENTATION</text>
+
+  <g>
+    <rect x="420" y="158" width="220" height="54" class="comp"/>
+    <rect x="410" y="170" width="20" height="12" class="comp"/>
+    <rect x="410" y="188" width="20" height="12" class="comp"/>
+    <text x="530" y="180" class="stereo">&#171;composant&#187;</text>
+    <text x="530" y="196" class="comp-nom">Vues Blade</text>
+  </g>
+
+  <path d="M 530 212 L 530 252" class="dep"/>
+
+  <!-- ================= COUCHE APPLICATIVE ================= -->
+  <rect x="120" y="256" width="840" height="130" class="couche"/>
+  <text x="134" y="274" class="couche-t">COUCHE APPLICATIVE</text>
+
+  <g>
+    <rect x="180" y="288" width="200" height="54" class="comp"/>
+    <rect x="170" y="300" width="20" height="12" class="comp"/>
+    <rect x="170" y="318" width="20" height="12" class="comp"/>
+    <text x="280" y="310" class="stereo">&#171;composant&#187;</text>
+    <text x="280" y="326" class="comp-nom">Contrôleurs</text>
+  </g>
+
+  <g>
+    <rect x="430" y="288" width="200" height="54" class="comp"/>
+    <rect x="420" y="300" width="20" height="12" class="comp"/>
+    <rect x="420" y="318" width="20" height="12" class="comp"/>
+    <text x="530" y="310" class="stereo">&#171;composant&#187;</text>
+    <text x="530" y="326" class="comp-nom">Middleware CheckRole</text>
+  </g>
+
+  <g>
+    <rect x="680" y="288" width="200" height="54" class="comp"/>
+    <rect x="670" y="300" width="20" height="12" class="comp"/>
+    <rect x="670" y="318" width="20" height="12" class="comp"/>
+    <text x="780" y="310" class="stereo">&#171;composant&#187;</text>
+    <text x="780" y="326" class="comp-nom">Politiques d'autorisation</text>
+  </g>
+
+  <path d="M 380 315 L 418 315" class="dep"/>
+  <path d="M 630 315 L 668 315" class="dep"/>
+  <path d="M 280 342 L 280 412" class="dep"/>
+  <text x="330" y="380" class="dep-txt">délègue</text>
+
+  <!-- ================= COUCHE METIER ================= -->
+  <rect x="120" y="416" width="840" height="182" class="couche"/>
+  <text x="134" y="434" class="couche-t">COUCHE MÉTIER (SERVICES)</text>
+
+  <g>
+    <rect x="150" y="448" width="180" height="50" class="comp"/>
+    <rect x="140" y="458" width="18" height="11" class="comp"/>
+    <rect x="140" y="474" width="18" height="11" class="comp"/>
+    <text x="240" y="470" class="stereo">&#171;composant&#187;</text>
+    <text x="240" y="486" class="comp-nom">InvoiceService</text>
+  </g>
+
+  <g>
+    <rect x="360" y="448" width="180" height="50" class="comp"/>
+    <rect x="350" y="458" width="18" height="11" class="comp"/>
+    <rect x="350" y="474" width="18" height="11" class="comp"/>
+    <text x="450" y="470" class="stereo">&#171;composant&#187;</text>
+    <text x="450" y="486" class="comp-nom">PaymentService</text>
+  </g>
+
+  <g>
+    <rect x="570" y="448" width="180" height="50" class="comp"/>
+    <rect x="560" y="458" width="18" height="11" class="comp"/>
+    <rect x="560" y="474" width="18" height="11" class="comp"/>
+    <text x="660" y="470" class="stereo">&#171;composant&#187;</text>
+    <text x="660" y="486" class="comp-nom">DeclarationService</text>
+  </g>
+
+  <g>
+    <rect x="780" y="448" width="160" height="50" class="comp"/>
+    <rect x="770" y="458" width="18" height="11" class="comp"/>
+    <rect x="770" y="474" width="18" height="11" class="comp"/>
+    <text x="860" y="470" class="stereo">&#171;composant&#187;</text>
+    <text x="860" y="486" class="comp-nom">DocumentService</text>
+  </g>
+
+  <g>
+    <rect x="255" y="524" width="180" height="50" class="comp"/>
+    <rect x="245" y="534" width="18" height="11" class="comp"/>
+    <rect x="245" y="550" width="18" height="11" class="comp"/>
+    <text x="345" y="546" class="stereo">&#171;composant&#187;</text>
+    <text x="345" y="562" class="comp-nom">ExcelReportService</text>
+  </g>
+
+  <g>
+    <rect x="465" y="524" width="180" height="50" class="comp"/>
+    <rect x="455" y="534" width="18" height="11" class="comp"/>
+    <rect x="455" y="550" width="18" height="11" class="comp"/>
+    <text x="555" y="546" class="stereo">&#171;composant&#187;</text>
+    <text x="555" y="562" class="comp-nom">Générateur PDF</text>
+  </g>
+
+  <path d="M 240 498 L 240 640" class="dep"/>
+  <path d="M 450 498 L 450 640" class="dep"/>
+  <path d="M 660 498 L 660 640" class="dep"/>
+  <text x="510" y="612" class="dep-txt">persiste via</text>
+
+  <!-- ================= COUCHE PERSISTANCE ================= -->
+  <rect x="120" y="644" width="840" height="96" class="couche"/>
+  <text x="134" y="662" class="couche-t">COUCHE DE PERSISTANCE</text>
+
+  <g>
+    <rect x="360" y="670" width="280" height="54" class="comp"/>
+    <rect x="350" y="682" width="20" height="12" class="comp"/>
+    <rect x="350" y="700" width="20" height="12" class="comp"/>
+    <text x="500" y="692" class="stereo">&#171;composant&#187;</text>
+    <text x="500" y="708" class="comp-nom">Modèles Eloquent (ORM)</text>
+  </g>
+
+  <path d="M 460 724 L 400 786" class="dep"/>
+  <path d="M 560 724 L 700 786" class="dep"/>
+
+  <!-- ================= RESSOURCES ================= -->
+  <g>
+    <rect x="250" y="790" width="230" height="54" class="comp"/>
+    <text x="365" y="812" class="stereo">&#171;base de données&#187;</text>
+    <text x="365" y="828" class="comp-nom">Base relationnelle</text>
+  </g>
+
+  <g>
+    <rect x="600" y="790" width="230" height="54" class="comp"/>
+    <text x="715" y="812" class="stereo">&#171;système de fichiers&#187;</text>
+    <text x="715" y="828" class="comp-nom">Stockage GED</text>
+  </g>
+</svg>
