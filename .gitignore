@@ -22,3 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Captures d'ecran et images generees pour le rapport
+/docs/captures/*.png
+/docs/diagrammes/png-*.png
