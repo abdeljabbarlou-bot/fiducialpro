@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+/* Icônes Font Awesome servies localement (aucune dépendance à un CDN externe) */
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    /*
+     * Police de l'application. 'Plus Jakarta Sans' est chargée depuis Google Fonts
+     * lorsque la connexion est disponible ; la pile de repli garantit un rendu
+     * correct hors ligne.
+     */
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
